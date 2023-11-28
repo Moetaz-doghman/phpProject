@@ -1,4 +1,5 @@
 <?php
+
 class Reclamation {
     private $id;
     private $sujet;
@@ -24,7 +25,6 @@ class Reclamation {
         return $this->sujet;
     }
 
-
     public function setSujet($sujet) {
         $this->sujet = $sujet;
     }
@@ -37,19 +37,20 @@ class Reclamation {
         $this->description = $description;
     }
 
-    public function addResponse(Response $response) {
+    public function addResponse(Reponse $response) {
         $this->responses[] = $response;
     }
 
     public function getResponses() {
         return $this->responses;
     }
+
     public function getCreatedAt() {
         return $this->created_at;
     }
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
+
+    public function setCreatedAt($created_at) {
+        $this->created_at = $created_at;
     }
 
     public function getUpdatedAt() {

@@ -1,14 +1,15 @@
 <?php
+
 class Reponse {
 
     private $id;
-    private $reclamationId;
+    private $reclamation;
     private $contenu;
     private $created_at;
     private $updated_at;
 
-    public function __construct($reclamationId, $contenu) {
-        $this->reclamationId = $reclamationId;
+    public function __construct(Reclamation $reclamation, $contenu) {
+        $this->reclamation = $reclamation;
         $this->contenu = $contenu;
     }
 
@@ -16,12 +17,16 @@ class Reponse {
         return $this->id;
     }
 
-    public function getReclamationId() {
-        return $this->reclamationId;
+    public function setId($id) {
+        $this->id = $id;
     }
 
-    public function setReclamationId($reclamationId) {
-        $this->reclamationId = $reclamationId;
+    public function getReclamation() {
+        return $this->reclamation;
+    }
+
+    public function setReclamation($reclamation) {
+        $this->reclamation = $reclamation;
     }
 
     public function getContenu() {
