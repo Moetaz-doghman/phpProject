@@ -11,11 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_reclamation']
     // Appel de la méthode du contrôleur pour créer une réclamation
     $result = $reclamationController->createReclamation($sujet, $description);
 
-    // if ($result) {
-    //     echo "Réclamation ajoutée avec succès!";
-    // } else {
-    //     echo "Erreur lors de l'ajout de la réclamation.";
-    // }
+    if ($result) {
+        echo "Réclamation ajoutée avec succès!";
+    } else {
+        echo "Erreur lors de l'ajout de la réclamation.";
+    }
 }
 ?>
 
