@@ -52,8 +52,36 @@ class ReponseController {
         }
     }
 
-    
+    public function createReponse($reclamationId, $contenu) {
+        try {
+            // Préparez votre requête SQL avec des paramètres nommés
+            $sql = 'INSERT INTO reponses (reclamation_id, contenu) VALUES (:reclamation_id, :contenu)';
 
+            // Utilisez la méthode préparée pour éviter les injections SQL
+            $stmt = Config::getConnexion()->prepare($sql);
+
+            // Liez les valeurs aux paramètres de la requête
+            $stmt->bindParam(':reclamation_id', $reclamationId, PDO::PARAM_INT);
+            $stmt->bindParam(':contenu', $contenu, PDO::PARAM_STR);
+
+            // Exécutez la requête
+            $stmt->execute();
+
+            // Si vous avez besoin de l'ID de la réponse nouvellement ajoutée, vous pouvez le récupérer
+            $lastInsertedId = Config::getLastInsertedId();
+            
+            // Vous pouvez effectuer d'autres actions si nécessaire, comme rediriger l'utilisateur ou afficher un message de réussite
+        } catch (PDOException $e) {
+            // En cas d'erreur, vous pouvez gérer l'exception ici (par exemple, journalisation, affichage d'un message d'erreur, etc.)
+            die('Erreur lors de l\'ajout de la réponse : ' . $e->getMessage());
+        }
+    }
+
+   
+
+   
+
+  
 }
 
     

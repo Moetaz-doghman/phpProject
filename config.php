@@ -22,6 +22,25 @@ class Config {
         return $conn->query($sql);
     }
 
+    public static function executeQueryMutiple($sql, $params = []) {
+        $conn = self::getConnexion();
+
+        try {
+            $stmt = $conn->prepare($sql);
+
+            foreach ($params as $param => $value) {
+                $stmt->bindParam($param, $value);
+            }
+
+            $stmt->execute();
+
+            return $stmt;
+        } catch (PDOException $e) {
+            echo "Erreur d'exécution de la requête : " . $e->getMessage();
+            return false;
+        }
+    }
+
     public static function getLastInsertedId() {
         $conn = self::getConnexion();
         return $conn->lastInsertId();
