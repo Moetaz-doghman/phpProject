@@ -37,6 +37,23 @@ class ReponseController {
 
         return $responses;
     }
+
+    public function deleteResponseById($responseId) {
+        $sql = "DELETE FROM reponses WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $responseId, PDO::PARAM_INT);
+
+        try {
+            $stmt->execute();
+            return true; // La suppression s'est bien déroulée
+        } catch (PDOException $e) {
+           
+            return false;
+        }
+    }
+
+    
+
 }
 
     

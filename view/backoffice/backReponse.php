@@ -250,42 +250,40 @@
                   <th>ID</th>
                   <th>contenu</th>
                   <th>Sujet de Réclamation</th>
-                  <th>Créé le</th>
-                  <th>Action</th> <!-- Nouvelle colonne pour les actions -->
+                  <th>Description de Réclamation</th>
+                  <th>Action</th> 
                 </tr>
               </thead>
               <tbody>
               <?php foreach ($listRep as $reponse): ?>
-    <tr>
-        <td><?php echo $reponse->getId(); ?></td>
-        <td><?php echo $reponse->getContenu(); ?></td> 
-        <td>
-            <?php 
-                // Vérifiez si la réclamation est définie avant d'accéder à ses propriétés
-                $reclamation = $reponse->getReclamation();
-                if ($reclamation) {
-                    echo $reclamation->getSujet(); 
-                } else {
-                    echo "Réclamation non définie";
-                }
-            ?>
-        </td>
-        <td>
-            <?php 
-                // Vérifiez si la réclamation est définie avant d'accéder à ses propriétés
-                $reclamation = $reponse->getReclamation();
-                if ($reclamation) {
-                    echo $reclamation->getDescription(); 
-                } else {
-                    echo "Réclamation non définie";
-                }
-            ?>
-        </td>
-        <td>
-            <a href="supprimerRec.php?id=<?php echo $reponse->getId(); ?>" class="btn btn-danger btn-sm">Supprimer</a>
-        </td>
-    </tr>
-<?php endforeach; ?>
+              <tr>
+                  <td><?php echo $reponse->getId(); ?></td>
+                  <td><?php echo $reponse->getContenu(); ?></td> 
+                  <td>
+                      <?php 
+                          $reclamation = $reponse->getReclamation();
+                          if ($reclamation) {
+                              echo $reclamation->getSujet(); 
+                          } else {
+                              echo "Réclamation non définie";
+                          }
+                      ?>
+                </td>
+                <td>
+                    <?php 
+                        $reclamation = $reponse->getReclamation();
+                        if ($reclamation) {
+                            echo $reclamation->getDescription(); 
+                        } else {
+                            echo "Réclamation non définie";
+                        }
+                    ?>
+                </td>
+                      <td>
+                          <a href="supprimerRep.php?id=<?php echo $reponse->getId(); ?>" class="btn btn-danger btn-sm">Supprimer</a>
+                      </td>
+                  </tr>
+              <?php endforeach; ?>
 
               </tbody>
             </table>
