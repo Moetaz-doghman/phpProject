@@ -49,4 +49,24 @@ class ReclamationController {
         $sql = "DELETE FROM reclamations WHERE id = $id";
         return $this->db->executeQuery($sql);
     }
+
+  
+
+    public function getAllReclamations() {
+        $sql = "SELECT * FROM reclamations";
+        $result = $this->db->executeQuery($sql);
+
+        $reclamations = [];
+
+        if ($result && $result->rowCount() > 0) {
+            while ($row = $result->fetch()) {
+                $reclamation = new Reclamation($row['sujet'], $row['description']);
+                $reclamation->setId($row['id']);
+                $reclamation->setCreatedAt($row['created_at']); 
+                $reclamations[] = $reclamation;
+            }
+        }
+
+        return $reclamations;
+    }
 }

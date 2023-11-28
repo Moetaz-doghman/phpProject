@@ -47,6 +47,10 @@ class Reclamation {
     public function getCreatedAt() {
         return $this->created_at;
     }
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
 
     public function getUpdatedAt() {
         return $this->updated_at;
