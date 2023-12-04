@@ -10,10 +10,10 @@ class ReclamationController {
         $this->db = new Config(); // Utilisez le nom de classe correct, Config au lieu de config
     }
 
-    public function createReclamation($sujet, $description) {
-        $reclamation = new Reclamation($sujet, $description);
+    public function createReclamation($sujet, $description,$id_user) {
+        $reclamation = new Reclamation($sujet, $description,$id_user);
 
-        $sql = "INSERT INTO reclamations (sujet, description) VALUES ('$sujet', '$description')";
+        $sql = "INSERT INTO reclamations (sujet, description , id_user) VALUES ('$sujet', '$description' , '$id_user')";
         $result = $this->db->executeQuery($sql);
 
         if ($result) {
@@ -31,7 +31,7 @@ class ReclamationController {
 
         if ($result && $result->rowCount() > 0) { // Utilisez rowCount() au lieu de num_rows
             $row = $result->fetch();
-            $reclamation = new Reclamation($row['sujet'], $row['description']);
+            $reclamation = new Reclamation($row['sujet'], $row['description'] , $row['id_user']);
             $reclamation->setId($row['id']);
             // Ajoutez les réponses associées à la réclamation ici si nécessaire
             return $reclamation;
@@ -60,7 +60,7 @@ class ReclamationController {
 
         if ($result && $result->rowCount() > 0) {
             while ($row = $result->fetch()) {
-                $reclamation = new Reclamation($row['sujet'], $row['description']);
+                $reclamation = new Reclamation($row['sujet'], $row['description'] ,  $row['id_user']);
                 $reclamation->setId($row['id']);
                 $reclamation->setCreatedAt($row['created_at']); 
                 $reclamations[] = $reclamation;
@@ -69,6 +69,25 @@ class ReclamationController {
 
         return $reclamations;
     }
+
+    public function getReclamationsByUserId($userId) {
+        $sql = "SELECT * FROM reclamations WHERE id_user = $userId";
+        $result = $this->db->executeQuery($sql);
+    
+        $reclamations = [];
+    
+        if ($result && $result->rowCount() > 0) {
+            while ($row = $result->fetch()) {
+                $reclamation = new Reclamation($row['sujet'], $row['description'], $row['id_user']);
+                $reclamation->setId($row['id']);
+                $reclamation->setCreatedAt($row['created_at']); 
+                $reclamations[] = $reclamation;
+            }
+        }
+    
+        return $reclamations;
+    }
+    
 
   
  

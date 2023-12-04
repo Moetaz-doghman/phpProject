@@ -4,17 +4,23 @@ require_once 'controlleur/ReclamationController.php';
 
 $reclamationController = new ReclamationController();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_reclamation'])) {
-    $sujet = $_POST['sujet'];
-    $description = $_POST['description'];
+if (isset($_GET['id'])) {
+    $reclamationId = $_GET['id'];
+    $reclamation = $reclamationController->getReclamation($reclamationId);
 
-    // Appel de la méthode du contrôleur pour créer une réclamation
-    $result = $reclamationController->createReclamation($sujet, $description,1);
+    
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_reclamation']) ) {
+        $sujet = $_POST['sujet'];
+        $description = $_POST['description'];
+        
+        // Appel de la méthode du contrôleur pour créer une réclamation
+        $result = $reclamationController->updateReclamation($reclamationId ,$sujet, $description);
 
-    if ($result) {
-        echo "Réclamation ajoutée avec succès!";
-    } else {
-        echo "Erreur lors de l'ajout de la réclamation.";
+        if ($result) {
+            echo "Réclamation modifiée avec succès!";
+        } else {
+            echo "Erreur lors de l'ajout de la réclamation.";
+        }
     }
 }
 ?>
@@ -157,16 +163,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_reclamation']
             <div class="col-lg-12">
                 <div class="checkout-inner">
                     <div class="billing-address">
-                        <h2>Ajout de Réclamation</h2>
+                        <h2>Modifier de Réclamation</h2>
                         <form action="" method="post">
                             <div class="row">
                                 <div class="col-md-12">
                                     <label>Sujet</label>
-                                    <input class="form-control" type="text" name="sujet" placeholder="Sujet" required>
+                                    <input class="form-control" type="text" name="sujet" placeholder="Sujet"  value="<?php echo $reclamation->getSujet(); ?>"  required>
                                 </div>
                                 <div class="col-md-12">
                                     <label>Description</label>
-                                    <textarea class="form-control" name="description" placeholder="Description" required></textarea>
+                                    <textarea class="form-control" name="description" placeholder="Description" required><?php echo $reclamation->getDescription(); ?></textarea>
                                 </div>
 
                                 <div class="col-md-12 mt-4">

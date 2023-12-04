@@ -7,11 +7,14 @@ class Reclamation {
     private $responses = []; // tableau pour stocker les réponses associées
     private $created_at;
     private $updated_at;
+    private $id_user;
 
-    public function __construct($sujet, $description) {
+    public function __construct($sujet, $description,$id_user) {
         $this->sujet = $sujet;
         $this->description = $description;
+        $this->id_user = $id_user;
     }
+    
 
     public function getId() {
         return $this->id;
@@ -19,6 +22,14 @@ class Reclamation {
 
     public function setId($id) {
         $this->id = $id;
+    }
+
+    public function getIdUSer() {
+        return $this->id_user;
+    }
+
+    public function setIdUser($id_user) {
+        $this->id_user = $id_user;
     }
 
     public function getSujet() {
