@@ -77,6 +77,52 @@ class ReponseController {
         }
     }
 
+    public function updateReponse($responseId, $contenu) {
+        try {
+            $sql = 'UPDATE reponses SET contenu = :contenu WHERE id = :responseId';
+    
+            $stmt = Config::getConnexion()->prepare($sql);
+    
+            $stmt->bindParam(':responseId', $responseId, PDO::PARAM_INT);
+            $stmt->bindParam(':contenu', $contenu, PDO::PARAM_STR);
+    
+            $stmt->execute();
+    
+        } catch (PDOException $e) {
+            die('Erreur lors de la mise à jour de la réponse : ' . $e->getMessage());
+        }
+    }
+
+    public function getReponseById($responseId) {
+        $sql = "SELECT r.id, r.reclamation_id, r.contenu, rc.sujet, rc.description
+                FROM reponses r
+                JOIN reclamations rc ON r.reclamation_id = rc.id
+                WHERE r.id = :responseId";
+    
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':responseId', $responseId, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if ($row !== false) {
+            // Créez d'abord la Réclamation
+            $reclamation = new Reclamation($row['sujet'], $row['description']);
+            $reclamation->setId($row['reclamation_id']);
+    
+            // Puis créez la Réponse en associant la Réclamation
+            $response = new Reponse($reclamation, $row['contenu']);
+            $response->setId($row['id']);
+    
+            return $response;
+        } else {
+            // La réponse n'a pas été trouvée
+            return null;
+        }
+    }
+    
+    
+
    
 
    

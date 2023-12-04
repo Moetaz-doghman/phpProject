@@ -281,6 +281,8 @@
                 </td>
                       <td>
                           <a href="supprimerRep.php?id=<?php echo $reponse->getId(); ?>" class="btn btn-danger btn-sm">Supprimer</a>
+                          <a href="updateRep.php?id=<?php echo $reponse->getId(); ?>" class="btn btn-primary btn-sm">Modifier</a>
+
                       </td>
                   </tr>
               <?php endforeach; ?>
