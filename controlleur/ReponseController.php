@@ -13,7 +13,7 @@ class ReponseController {
     }
 
     public function getAllResponses() {
-        $sql = "SELECT r.id, r.reclamation_id, r.contenu, rc.sujet, rc.description
+        $sql = "SELECT r.id, r.reclamation_id, r.contenu , rc.id_user, rc.sujet, rc.description
                 FROM reponses r
                 JOIN reclamations rc ON r.reclamation_id = rc.id";
 
@@ -24,7 +24,7 @@ class ReponseController {
         if ($result !== false) {
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                 // Créez d'abord la Réclamation
-                $reclamation = new Reclamation($row['sujet'], $row['description']);
+                $reclamation = new Reclamation($row['sujet'], $row['description'] , $row['id_user']);
                 $reclamation->setId($row['reclamation_id']);
 
                 // Puis créez la Réponse en associant la Réclamation
@@ -94,7 +94,7 @@ class ReponseController {
     }
 
     public function getReponseById($responseId) {
-        $sql = "SELECT r.id, r.reclamation_id, r.contenu, rc.sujet, rc.description
+        $sql = "SELECT r.id, r.reclamation_id, r.contenu, rc.sujet, rc.description , rc.id_user
                 FROM reponses r
                 JOIN reclamations rc ON r.reclamation_id = rc.id
                 WHERE r.id = :responseId";
@@ -107,7 +107,7 @@ class ReponseController {
     
         if ($row !== false) {
             // Créez d'abord la Réclamation
-            $reclamation = new Reclamation($row['sujet'], $row['description']);
+            $reclamation = new Reclamation($row['sujet'], $row['description'] , $row['id_user']);
             $reclamation->setId($row['reclamation_id']);
     
             // Puis créez la Réponse en associant la Réclamation

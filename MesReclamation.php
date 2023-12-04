@@ -64,16 +64,9 @@
                             <a href="product-list.html" class="nav-item nav-link">Products</a>
                             <a href="product-detail.html" class="nav-item nav-link">Product Detail</a>
                             <a href="cart.html" class="nav-item nav-link">Cart</a>
-                            <a href="checkout.html" class="nav-item nav-link">Checkout</a>
-                            <a href="my-account.html" class="nav-item nav-link">My Account</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle active" data-toggle="dropdown">More Pages</a>
-                                <div class="dropdown-menu">
-                                    <a href="wishlist.html" class="dropdown-item active">Wishlist</a>
-                                    <a href="login.html" class="dropdown-item">Login & Register</a>
-                                    <a href="contact.html" class="dropdown-item">Contact Us</a>
-                                </div>
-                            </div>
+                            <a href="reclamation.php" class="nav-item nav-link ">Reclamation</a>
+                            <a href="MesReclamation.php" class="nav-item nav-link active">Mes reclamations</a>
+                          
                         </div>
                         <div class="navbar-nav ml-auto">
                             <div class="nav-item dropdown">
@@ -135,12 +128,15 @@
         </div>
         <!-- Breadcrumb End -->
         
-        <!-- Wishlist Start -->
-        <div class="wishlist-page">
-            <div class="container-fluid">
-                <div class="wishlist-page-inner">
-                    <div class="row">
-                        <div class="col-md-12">
+    <!-- Wishlist Start -->
+    <div class="wishlist-page">
+        <div class="container-fluid">
+            <div class="wishlist-page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php if (empty($listRec)): ?>
+                            <p>Pas de réclamations pour le moment.</p>
+                        <?php else: ?>
                             <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead class="thead-dark">
@@ -157,22 +153,24 @@
                                             <td><?php echo $reclamation->getSujet(); ?></td>
                                             <td><?php echo $reclamation->getDescription(); ?></td>
                                             <td>
-                                            <a href="supprimerRec.php?id=<?php echo $reclamation->getId(); ?>" ><button><i class="fa fa-trash"></i></button></a>
+                                                <a href="supprimerRec.php?id=<?php echo $reclamation->getId(); ?>"><button><i class="fa fa-trash"></i></button></a>
                                             </td>
                                             <td>
-                                            <a href="updateReclamation.php?id=<?php echo $reclamation->getId(); ?>"><button><i class="fa fa-edit"></i></button></a>
+                                                <a href="updateReclamation.php?id=<?php echo $reclamation->getId(); ?>"><button><i class="fa fa-edit"></i></button></a>
                                             </td>
                                         </tr>
                                         <?php endforeach; ?>                                      
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Wishlist End -->
+    </div>
+<!-- Wishlist End -->
+
         
         <!-- Footer Start -->
         <div class="footer">

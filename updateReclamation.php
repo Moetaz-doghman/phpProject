@@ -85,16 +85,8 @@ if (isset($_GET['id'])) {
                         <a href="product-list.html" class="nav-item nav-link">Products</a>
                         <a href="product-detail.html" class="nav-item nav-link">Product Detail</a>
                         <a href="cart.html" class="nav-item nav-link">Cart</a>
-                        <a href="checkout.html" class="nav-item nav-link active">Checkout</a>
-                        <a href="my-account.html" class="nav-item nav-link">My Account</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More Pages</a>
-                            <div class="dropdown-menu">
-                                <a href="wishlist.html" class="dropdown-item">Wishlist</a>
-                                <a href="login.html" class="dropdown-item">Login & Register</a>
-                                <a href="contact.html" class="dropdown-item">Contact Us</a>
-                            </div>
-                        </div>
+                        <a href="reclamation.php" class="nav-item nav-link ">Reclamation</a>
+                        <a href="MesReclamation.php" class="nav-item nav-link active">Mes reclamations</a>
                     </div>
                     <div class="navbar-nav ml-auto">
                         <div class="nav-item dropdown">

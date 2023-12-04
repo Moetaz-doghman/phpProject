@@ -17,6 +17,8 @@
 
           // Appeler la méthode d'ajout de réponse
           $reponseC->updateReponse($reponseId, $contenu);
+          header("Location: backReponse.php");
+
       }
   }
   ?>
@@ -209,29 +211,47 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-                with font-awesome or any other icon font library -->
-            <li class="nav-item menu-open">
-              <a href="#" class="nav-link active">
-                <i class="nav-icon fas fa-edit"></i>
-                <p>
-                  Forms
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="../forms/general.html" class="nav-link active">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>General Elements</p>
-                  </a>
-                </li>          
-              </ul>
-            </li>
-
-          </ul>
-        </nav>
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Reclamation
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="backReclamation.php" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Afficher les reclamations</p>
+                </a>
+              </li>
+             
+            </ul>
+          </li>
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Reponse
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="backReponse.php" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Afficher les reponses</p>
+                </a>
+              </li>
+             
+            </ul>
+          </li>
+        </ul>
+      </nav>
         <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->

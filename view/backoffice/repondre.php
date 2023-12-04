@@ -21,6 +21,8 @@ if (isset($_GET['id'])) {
 
         // Appeler la méthode d'ajout de réponse
         $reponseC->createReponse($reclamationId, $contenu);
+        header("Location: backReponse.php");
+
     }
 }
 ?>
@@ -211,32 +213,48 @@ if (isset($_GET['id'])) {
         </div>
       </div>
 
-      <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
             <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-edit"></i>
+              <i class="nav-icon fas fa-table"></i>
               <p>
-                Forms
+                Reclamation
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="../forms/general.html" class="nav-link active">
+                <a href="backReclamation.php" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>General Elements</p>
+                  <p>Afficher les reclamations</p>
                 </a>
-              </li>          
+              </li>
+             
             </ul>
           </li>
-
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Reponse
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="backReponse.php" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Afficher les reponses</p>
+                </a>
+              </li>
+             
+            </ul>
+          </li>
         </ul>
       </nav>
-      <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
   </aside>

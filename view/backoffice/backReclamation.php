@@ -183,15 +183,33 @@
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-table"></i>
               <p>
-                Tables
+                Reclamation
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="../tables/simple.html" class="nav-link active">
+                <a href="backReclamation.php" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Simple Tables</p>
+                  <p>Afficher les reclamations</p>
+                </a>
+              </li>
+             
+            </ul>
+          </li>
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Reponse
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="backReponse.php" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Afficher les reponses</p>
                 </a>
               </li>
              
@@ -252,6 +270,7 @@
                   <th>Sujet</th>
                   <th>Description</th>
                   <th>Action</th> <!-- Nouvelle colonne pour les actions -->
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
