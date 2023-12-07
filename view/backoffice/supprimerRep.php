@@ -9,10 +9,10 @@ if (isset($_GET['id'])) {
 
     $reponseC->deleteResponseById($reponseId);
 
-    header("Location: index.php");
+    header("Location: backReponse.php");
     exit();
 } else {
-    header("Location: index.php");
+    header("Location: backReponse.php");
     exit();
 }
 ?>

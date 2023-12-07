@@ -121,6 +121,34 @@ class ReponseController {
         }
     }
     
+    public function getReponseByReclamationId($reclamationId)
+    {
+        $sql = "SELECT r.id, r.reclamation_id, r.contenu, rc.sujet, rc.description , rc.id_user
+                FROM reponses r
+                JOIN reclamations rc ON r.reclamation_id = rc.id
+                WHERE r.reclamation_id = :reclamationId";
+    
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':reclamationId', $reclamationId, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if ($row !== false) {
+            // Créez d'abord la Réclamation
+            $reclamation = new Reclamation($row['sujet'], $row['description'] , $row['id_user']);
+            $reclamation->setId($row['reclamation_id']);
+    
+            // Puis créez la Réponse en associant la Réclamation
+            $response = new Reponse($reclamation, $row['contenu']);
+            $response->setId($row['id']);
+    
+            return $response;
+        } else {
+            // La réponse n'a pas été trouvée
+            return null;
+        }
+    }
     
 
    

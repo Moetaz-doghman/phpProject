@@ -9,10 +9,10 @@ if (isset($_GET['id'])) {
 
     $reclamationC->deleteReclamation($reclamationId);
 
-    header("Location: index.php");
+    header("Location: backReclamation.php");
     exit();
 } else {
-    header("Location: index.php");
+    header("Location: backReclamation.php");
     exit();
 }
 ?>

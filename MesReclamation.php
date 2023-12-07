@@ -1,9 +1,13 @@
 <?PHP
 	require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '../phpProject/controlleur/ReclamationController.php');
+	require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '../phpProject/controlleur/ReponseController.php');
 
 	$reclamationC=new ReclamationController();
+	$reponseC=new ReponseController();
 
 	$listRec=$reclamationC->getReclamationsByUserId(1);
+
+    
 
 ?>
 <!DOCTYPE html>
@@ -143,6 +147,7 @@
                                         <tr>
                                             <th>Sujet</th>
                                             <th>Description</th>
+                                            <th>Reponse</th>
                                             <th>Remove</th>
                                             <th>Update</th>
                                         </tr>
@@ -153,13 +158,26 @@
                                             <td><?php echo $reclamation->getSujet(); ?></td>
                                             <td><?php echo $reclamation->getDescription(); ?></td>
                                             <td>
+                                            <?php
+                                            $reponse = $reponseC->getReponseByReclamationId($reclamation->getId());
+                                            
+                                            if ($reponse) {
+                                                echo $reponse->getContenu();
+                                            } else {
+                                                echo "Pas de réponse";
+                                            }
+                                            ?>
+                                        </td>
+                                            <td>
                                                 <a href="supprimerRec.php?id=<?php echo $reclamation->getId(); ?>"><button><i class="fa fa-trash"></i></button></a>
                                             </td>
                                             <td>
                                                 <a href="updateReclamation.php?id=<?php echo $reclamation->getId(); ?>"><button><i class="fa fa-edit"></i></button></a>
                                             </td>
                                         </tr>
-                                        <?php endforeach; ?>                                      
+                                        <?php endforeach; ?> 
+                                        
+                                        
                                     </tbody>
                                 </table>
                             </div>
