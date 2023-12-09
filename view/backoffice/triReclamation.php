@@ -288,7 +288,7 @@
               </tbody>
             </table>
             <div class="card-footer">
-            <button type="button" class="btn btn-dark"><a href="triReclamation.php">Affichage sans tri</a></button>
+            <button type="button" class="btn btn-dark"><a href="backReclamation.php">Affichage sans tri</a></button>
             <button type="button" class="btn btn-dark"><a href="stat.php">Statistique</a></button>
             </div>
           </div>
