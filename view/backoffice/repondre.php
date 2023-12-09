@@ -2,27 +2,26 @@
 require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '../phpProject/controlleur/ReponseController.php');
 require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '../phpProject/controlleur/ReclamationController.php');
 
-
 $reponseC = new ReponseController();
 $reclamationC = new ReclamationController();
-
+$successMessage = ""; 
+$errorMessage = "";
 
 if (isset($_GET['id'])) {
     $reclamationId = $_GET['id'];
     $reclamation = $reclamationC->getReclamation($reclamationId);
-    
 
-
-
-    // Vérifier si le formulaire a été soumis
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['responseContent'])) {
-        // Récupérer le contenu de la réponse depuis le formulaire
         $contenu = $_POST['responseContent'];
 
-        // Appeler la méthode d'ajout de réponse
-        $reponseC->createReponse($reclamationId, $contenu);
-        header("Location: backReponse.php");
-
+        if (strlen($contenu) < 10 || strlen($contenu) > 500) {
+            //echo "<script>alert('La longueur de la réponse doit être entre 10 et 500 caractères.')</script>";
+            $errorMessage = "La longueur de la réponse doit être entre 10 et 500 caractères" ;
+        } else {
+            $reponseC->createReponse($reclamationId, $contenu);
+            $reclamationC->resolveReclamation($reclamationId);
+            header("Location: backReponse.php");
+        }
     }
 }
 ?>
@@ -40,6 +39,8 @@ if (isset($_GET['id'])) {
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -353,5 +354,16 @@ $(function () {
   bsCustomFileInput.init();
 });
 </script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+<script>
+    // Display the toast if there's an error message
+    <?php if (!empty($errorMessage)) : ?>
+        toastr.error("<?php echo $errorMessage; ?>");
+    <?php endif; ?>
+    <?php if (!empty($successMessage)) : ?>
+        toastr.success("<?php echo $successMessage; ?>");
+    <?php endif; ?>
+    </script>
 </body>
 </html>

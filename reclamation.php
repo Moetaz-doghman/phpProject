@@ -3,6 +3,8 @@ require_once 'controlleur/ReclamationController.php';
 
 
 $reclamationController = new ReclamationController();
+$successMessage = ""; 
+$errorMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_reclamation'])) {
     $sujet = $_POST['sujet'];
@@ -12,9 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_reclamation']
     $result = $reclamationController->createReclamation($sujet, $description,1);
 
     if ($result) {
-        echo "Réclamation ajoutée avec succès!";
+        $successMessage ="Réclamation ajoutée avec succès!" ;
     } else {
-        echo "Erreur lors de l'ajout de la réclamation.";
+        $errorMessage = "Erreur lors de l'ajout de la réclamation.";
     }
 }
 ?>
@@ -44,7 +46,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_reclamation']
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
 </head>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('form').addEventListener('submit', function(event) {
+            var sujet = document.querySelector('input[name="sujet"]').value;
+            var description = document.querySelector('textarea[name="description"]').value;
+
+            if (sujet.length < 5 || sujet.length > 100) {
+                toastr.error("La longueur du sujet doit être entre 5 et 100 caractères.");
+                event.preventDefault(); 
+            }
+
+            if (description.length < 10 || description.length > 500) {
+                toastr.error("La longueur de la description doit être entre 10 et 500 caractères.");
+                event.preventDefault(); 
+            }
+        });
+    });
+</script>
 
 <body>
     <!-- Top bar Start -->
@@ -186,7 +208,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_reclamation']
                             <p><i class="fa fa-map-marker"></i>123 E Store, Los Angeles, USA</p>
                             <p><i class="fa fa-envelope"></i>email@example.com</p>
                             <p><i class="fa fa-phone"></i>+123-456-7890</p>
-                        </div>
+                        </div>  
                     </div>
                 </div>
 
@@ -275,6 +297,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_reclamation']
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    
+    <script>
+    // Display the toast if there's an error message
+    <?php if (!empty($errorMessage)) : ?>
+        toastr.error("<?php echo $errorMessage; ?>");
+    <?php endif; ?>
+    <?php if (!empty($successMessage)) : ?>
+        toastr.success("<?php echo $successMessage; ?>");
+    <?php endif; ?>
+    </script>
 </body>
 
 </html>

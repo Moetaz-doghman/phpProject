@@ -1,15 +1,9 @@
 <?PHP
 	require_once(realpath($_SERVER["DOCUMENT_ROOT"]) . '../phpProject/controlleur/ReclamationController.php');
 
-	$reclamationC=new ReclamationController();
-
-  if (isset($_GET['search_sujet']) && isset($_GET['search_description'])) {
-    $search_sujet = $_GET['search_sujet'];
-    $search_description = $_GET['search_description'];
-    $listRec = $reclamationC->searchReclamations($search_sujet, $search_description);
-} else {
-    $listRec = $reclamationC->getAllReclamations();
-}
+  $reclamationC = new ReclamationController();
+  $resolvedCount = $reclamationC->getResolvedReclamationsCount();
+  $pendingCount = $reclamationC->getPendingReclamationsCount();
 
 ?>
 <!DOCTYPE html>
@@ -235,71 +229,32 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Simple Tables</h1>
+            <h1>Statistique</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Simple Tables</li>
+              <li class="breadcrumb-item active">Statistique</li>
             </ol>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
-
-  <!-- ... Autre code ... -->
+<!-- ... Autre code ... -->
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
         <div class="card">
-        <form method="get" action="">
-            <div class="card-header">
-              <h3 class="card-title">List Reclamation</h3>
-              <div class="card-tools">
-                <div class="input-group input-group-sm" style="width: 400px;">
-                  <input type="text" name="search_sujet" class="form-control float-right" placeholder="Recherche par sujet">
-                  <input type="text" name="search_description" class="form-control float-right" placeholder="Recherche par description">
-                  <div class="input-group-append">
-                    <button type="submit" class="btn btn-default">
-                      <i class="fas fa-search"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
+          <div class="card-header">
+            <h3 class="card-title">Nombre de réclamations résolues et en attente</h3>
+          </div>
           <!-- /.card-header -->
-          <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Sujet</th>
-                  <th>Description</th>
-                  <th>Action</th> <!-- Nouvelle colonne pour les actions -->
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php foreach ($listRec as $reclamation): ?>
-                  <tr>
-                    <td><?php echo $reclamation->getId(); ?></td>
-                    <td><?php echo $reclamation->getSujet(); ?></td>
-                    <td><?php echo $reclamation->getDescription(); ?></td>
-                    <td>
-                      <a href="supprimerRec.php?id=<?php echo $reclamation->getId(); ?>" class="btn btn-danger btn-sm">Supprimer</a>
-                      <a href="repondre.php?id=<?php echo $reclamation->getId(); ?>" class="btn btn-primary btn-sm">Répondre</a>
-                    </td>
-                  </tr>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
-            <div class="card-footer">
-            <button type="button" class="btn btn-dark"><a href="triReclamation.php">Tri décroissant selon date</a></button>
-            <button type="button" class="btn btn-dark"><a href="stat.php">Statistique</a></button>
-            </div>
+          <div>
+              <canvas id="reclamationsChart" width="400" height="200"></canvas>
+          </div>
+
           </div>
           <!-- /.card-body -->
         </div>
@@ -311,6 +266,7 @@
 </section>
 <!-- /.content -->
 <!-- ... Autre code ... -->
+
 
     <!-- /.content -->
   </div>
@@ -338,5 +294,39 @@
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ctx = document.getElementById('reclamationsChart').getContext('2d');
+        var reclamationsChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Réclamations Résolues', 'Réclamations en Attente'],
+                datasets: [{
+                    label: 'Nombre de Réclamations',
+                    data: [<?php echo $resolvedCount; ?>, <?php echo $pendingCount; ?>],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+
 </body>
 </html>

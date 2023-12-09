@@ -3,13 +3,7 @@
 
 	$reclamationC=new ReclamationController();
 
-  if (isset($_GET['search_sujet']) && isset($_GET['search_description'])) {
-    $search_sujet = $_GET['search_sujet'];
-    $search_description = $_GET['search_description'];
-    $listRec = $reclamationC->searchReclamations($search_sujet, $search_description);
-} else {
-    $listRec = $reclamationC->getAllReclamations();
-}
+	$listRec=$reclamationC->triReclamationsParCreatedAt();
 
 ?>
 <!DOCTYPE html>
@@ -254,22 +248,19 @@
     <div class="row">
       <div class="col-12">
         <div class="card">
-        <form method="get" action="">
-            <div class="card-header">
-              <h3 class="card-title">List Reclamation</h3>
-              <div class="card-tools">
-                <div class="input-group input-group-sm" style="width: 400px;">
-                  <input type="text" name="search_sujet" class="form-control float-right" placeholder="Recherche par sujet">
-                  <input type="text" name="search_description" class="form-control float-right" placeholder="Recherche par description">
-                  <div class="input-group-append">
-                    <button type="submit" class="btn btn-default">
-                      <i class="fas fa-search"></i>
-                    </button>
-                  </div>
+          <div class="card-header">
+            <h3 class="card-title">Responsive Hover Table</h3>
+            <div class="card-tools">
+              <div class="input-group input-group-sm" style="width: 150px;">
+                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-default">
+                    <i class="fas fa-search"></i>
+                  </button>
                 </div>
               </div>
             </div>
-          </form>
+          </div>
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
             <table class="table table-hover text-nowrap">
@@ -297,7 +288,7 @@
               </tbody>
             </table>
             <div class="card-footer">
-            <button type="button" class="btn btn-dark"><a href="triReclamation.php">Tri décroissant selon date</a></button>
+            <button type="button" class="btn btn-dark"><a href="triReclamation.php">Affichage sans tri</a></button>
             <button type="button" class="btn btn-dark"><a href="stat.php">Statistique</a></button>
             </div>
           </div>

@@ -70,6 +70,24 @@ class ReclamationController {
         return $reclamations;
     }
 
+    public function triReclamationsParCreatedAt() {
+        $sql = "SELECT * FROM reclamations ORDER BY created_at DESC";
+        $result = $this->db->executeQuery($sql);
+
+        $reclamations = [];
+
+        if ($result && $result->rowCount() > 0) {
+            while ($row = $result->fetch()) {
+                $reclamation = new Reclamation($row['sujet'], $row['description'] ,  $row['id_user']);
+                $reclamation->setId($row['id']);
+                $reclamation->setCreatedAt($row['created_at']); 
+                $reclamations[] = $reclamation;
+            }
+        }
+
+        return $reclamations;
+    }
+
     public function getReclamationsByUserId($userId) {
         $sql = "SELECT * FROM reclamations WHERE id_user = $userId";
         $result = $this->db->executeQuery($sql);
@@ -87,6 +105,54 @@ class ReclamationController {
     
         return $reclamations;
     }
+
+    public function searchReclamations($sujet, $description) {
+        $sql = "SELECT * FROM reclamations WHERE sujet LIKE '%$sujet%' AND description LIKE '%$description%'";
+        $result = $this->db->executeQuery($sql);
+    
+        $reclamations = [];
+    
+        if ($result && $result->rowCount() > 0) {
+            while ($row = $result->fetch()) {
+                $reclamation = new Reclamation($row['sujet'], $row['description'], $row['id_user']);
+                $reclamation->setId($row['id']);
+                $reclamation->setCreatedAt($row['created_at']);
+                $reclamations[] = $reclamation;
+            }
+        }
+    
+        return $reclamations;
+    }
+
+    public function resolveReclamation($id) {
+        $sql = "UPDATE reclamations SET etat = 'Résolue' WHERE id = $id";
+        return $this->db->executeQuery($sql);
+    }
+
+    public function getResolvedReclamationsCount() {
+        $sql = "SELECT COUNT(*) as total FROM reclamations WHERE etat = 'Résolue'";
+        $result = $this->db->executeQuery($sql);
+    
+        if ($result && $result->rowCount() > 0) {
+            $row = $result->fetch();
+            return $row['total'];
+        }
+    
+        return 0;
+    }
+    
+    public function getPendingReclamationsCount() {
+        $sql = "SELECT COUNT(*) as total FROM reclamations WHERE etat = 'En Attente'";
+        $result = $this->db->executeQuery($sql);
+    
+        if ($result && $result->rowCount() > 0) {
+            $row = $result->fetch();
+            return $row['total'];
+        }
+    
+        return 0;
+    }
+    
     
 
   
